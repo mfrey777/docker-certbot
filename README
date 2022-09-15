@@ -1,0 +1,22 @@
+Build docker image:
+docker build -t my-certbot-image .
+
+Run docker image:
+docker run --name my-certbot -d -t -v ~/docker-volumes/letsencrypt:/etc/letsencrypt my-certbot-image
+
+Connect to bash in image
+docker exec -it my-certbot /bin/bash
+
+Run certbot:
+certbot certonly --manual --preferred-challenges dns -d app.abc.com -m info@abc.com --agree-tos --test-cert
+
+Kill and delete docker container:
+exit
+docker kill my-certbot
+docker rm my-certbot
+
+
+TODO
+=====
+- Remove --test-cert
+- Map volumes to get generated certificates out of docker container
